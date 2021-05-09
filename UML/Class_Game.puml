@@ -1,0 +1,128 @@
+@startuml
+class GameMaster{
+    各フェーズの管理を行うクラス
+}
+
+class StartPhase{
+    以下を行うクラス
+    ・開始演出
+    ・ゲーム初期化
+}
+
+class GamePhase{
+    ゲーム中処理を行うクラス
+}
+
+class ResultPhase{
+    結果表示を行うクラス
+}
+
+interface IMinigamePhase{
+    フェーズ用共通のインターフェース
+}
+GameMaster -- StartPhase
+GameMaster -- GamePhase
+GameMaster -- ResultPhase
+
+StartPhase ..|> IMinigamePhase
+GamePhase ..|> IMinigamePhase
+ResultPhase ..|> IMinigamePhase
+
+class ControlData{
+    各コントローラの受付を行うクラス
+}
+
+class PlayerController{
+    左右のプレイヤー制御を行うクラス
+}
+
+class PlayerModel{
+    プレイヤーの動作を処理するクラス
+}
+
+class PlayerView{
+    プレイヤー表示を行うクラス
+}
+
+PlayerController -- PlayerModel
+PlayerController -- PlayerView
+
+class BallController{
+    ボールの挙動コントロールを行うクラス
+}
+
+class BallModel{
+    以下を行うクラス
+    ・ボールの移動計算
+    ・得点計算
+}
+
+class BallView{
+    以下を行うクラス
+    ・ボールの描画
+    ・得点の描画
+}
+
+interface ICPU{
+    CPUのデータ用インターフェース
+}
+
+class CPU{
+    以下を行うクラス
+    ・難易度毎に分かれている(予定)
+    ・ICPUを継承
+}
+
+BallController -- BallModel
+BallController -- BallView
+
+
+BallModel -- CPU
+CPU ..-> ICPU
+
+class TimeLimitController{
+    制限時間の処理制御を行うクラス
+}
+
+class TimeLimitModel{
+    制限時間の監視を行うクラス
+}
+
+class TimeLimitView{
+    制限時間の表示を行うクラス
+}
+
+TimeLimitController -- TimeLimitModel
+TimeLimitController -- TimeLimitView
+
+class ScoreController{
+    1P,2Pのプレイヤーのスコア
+}
+
+class ScoreModel{
+    スコア計算を行うクラス
+}
+
+class ScoreView{
+    スコア表示を行うクラス
+}
+
+class ResultController{
+    ResultPhaseの結果表示
+}
+
+ScoreController -- ScoreModel
+ScoreController -- ScoreView
+
+GameMaster -- ControllerData
+StartPhase -- ControllerData
+GamePhase -- ControllerData
+ResultPhase -- ControllerData
+
+ControllerData -- ScoreController
+ControllerData -- PlayerController
+ControllerData -- BallController
+ControllerData -- TimeLimitController
+ControllerData -- ResultController
+
+@enduml
