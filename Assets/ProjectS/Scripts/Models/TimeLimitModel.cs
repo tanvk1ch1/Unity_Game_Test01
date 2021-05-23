@@ -1,18 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
-public class TimeLimitModel : MonoBehaviour
+namespace ProjectS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class TimeLimitModel
     {
+        #region Member
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        public Action onFinishTimer;
         
+        private float timeLimitSeconds;
+        private float timer;
+        
+        public TimeLimitModel() {}
+        
+        #endregion
+        
+        #region Method
+        
+        public void SetTimeLimit(float max)
+        {
+            timeLimitSeconds = max;
+        }
+        
+        public void Update(float deltaTime)
+        {
+            timer += deltaTime;
+            if (timer >= timeLimitSeconds)
+            {
+                onFinishTimer?.Invoke();
+            }
+        }
+        
+        public int GetRestTime()
+        {
+            float rest = timeLimitSeconds - timer;
+            if (rest > 0 && rest < timeLimitSeconds)
+            {
+                return (int)rest + 1;
+            }
+            return (int)rest;
+        }
+        
+        #endregion
     }
 }

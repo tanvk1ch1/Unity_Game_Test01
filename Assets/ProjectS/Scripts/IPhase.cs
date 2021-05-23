@@ -1,6 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using System;
 
 namespace ProjectS
 {
@@ -8,7 +6,7 @@ namespace ProjectS
     {
         Action OnFinishPhase { get; set; }
         
-        void Init();
-        void Run();
+        void Init(ControllData controllData);
+        void Run(float deltatime);
     }
 }

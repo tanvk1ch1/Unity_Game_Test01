@@ -1,18 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class ScoreView : MonoBehaviour
+namespace ProjectS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ScoreView : MonoBehaviour
     {
+        #region Member
         
-    }
+        [SerializeField] private Text text;
+        [SerializeField] private GameObject playerIcon;
+        [SerializeField] private GameObject cpuIcon;
+        
+        #endregion
+        
+        #region Method
 
-    // Update is called once per frame
-    void Update()
-    {
+        public void SetScore(int score)
+        {
+            text.text = score.ToString();
+        }
         
+        public void SetCPUIcon()
+        {
+            playerIcon.SetActive(false);
+            cpuIcon.SetActive(true);
+        }
+        
+        #endregion
     }
 }

@@ -1,18 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class ScoreModel : MonoBehaviour
+namespace ProjectS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ScoreModel
     {
+        #region Member
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        private const int MaxScore = 99999;
+        private int[] playerScore = {0, 0};
         
+        #endregion
+        
+        #region Method
+        
+        public ScoreModel() {}
+        
+        public void AddPlayerScore(BallConstants.AttackPlayer player, int addScore)
+        {
+            playerScore[(int) player] += addScore;
+            if (playerScore[(int) player] > MaxScore)
+            {
+                playerScore[(int) player] = MaxScore;
+            }
+        }
+        
+        public int GetPlayerScore(BallConstants.AttackPlayer player)
+        {
+            return playerScore[(int) player];
+        }
+        
+        #endregion
     }
 }

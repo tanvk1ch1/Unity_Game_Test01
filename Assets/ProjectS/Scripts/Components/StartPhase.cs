@@ -1,18 +1,69 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class StartPhase : MonoBehaviour
+namespace ProjectS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class StartPhase : IPhase
     {
+        #region Member
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        public Action OnFinishPhase { get; set; }
+        private ControllData _controllData;
+        private GameObject readyObject;
         
+        #endregion
+        
+        #region Method
+        
+        public void Init(ControllData data)
+        {
+            _controllData = data;
+            
+            // Readyオブジェクトを作る
+            if (readyObject == null)
+            {
+                readyObject = MonoBehaviour.Instantiate(ResourceStore.Instance.Get<GameObject>("ReadyCanvas"));
+                readyObject.SetActive(false);
+            }
+            
+            // ステージを作る
+            SetStage();
+            
+            _controllData.PlayerControllerInit();
+            _controllData.BallControllerGaugeInit();
+            _controllData.TimeLimitControllerInit();
+            
+            FadeManager.Instance.FadeIn(OnFinishFadeIn);
+        }
+        
+        public void Run(float deltaTime)
+        {
+            if (readyObject == null || !readyObject.activeSelf)
+            {
+                return;
+            }
+            if (InputObserver.Instance.CheckKeyDownDecide())
+            {
+                readyObject.SetActive(false);
+                _controllData.StartCountDownAnimation(OnEndCountDown);
+            }
+        }
+        
+        private void OnFinishFadeIn()
+        {
+            readyObject.SetActive(true);
+        }
+        
+        private void OnEndCountDown()
+        {
+            OnFinishPhase?.Invoke();
+        }
+        
+        private void SetStage()
+        {
+            GameObject stage = MonoBehaviour.Instantiate(_controllData.GetLoadData().GetStageGameObject());
+        }
+        
+        #endregion
     }
 }

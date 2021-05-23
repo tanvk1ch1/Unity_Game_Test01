@@ -1,18 +1,39 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+namespace ProjectS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlayerController : MonoBehaviour
     {
+        #region Member
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        private List<Animator> _animators = new List<Animator>();
+        private LoadDataObserver _loadDataObserver;
         
+        #endregion
+        
+        #region MonoBehavior
+        
+        public void Init(LoadDataObserver load)
+        {
+            _loadDataObserver = load;
+            SetEnemyObject();
+        }
+        
+        #endregion
+        
+        #region Method
+        
+        private void SetEnemyObject()
+        {
+            
+        }
+        
+        public void StartAttackAnimation(BallConstants.AttackPlayer player)
+        {
+            
+        }
+        
+        #endregion
     }
 }

@@ -1,18 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class BallView : MonoBehaviour
+namespace ProjectS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class BallView : MonoBehaviour
     {
+        #region Member
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        [SerializeField] private Image _image;
+        [SerializeField] private Text _pointText;
+        private Animator _animator;
         
+        #endregion
+        
+        #region MonoBehavior
+        
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+            gameObject.SetActive(false);
+        }
+        
+        #endregion
+        
+        #region Method
+        
+        public void SetPosition(Vector3 pos)
+        {
+            if (!gameObject.activeSelf)
+            {
+                gameObject.SetActive(true);
+            }
+            transform.localPosition = pos;
+        }
+        
+        public void StartAnimation()
+        {
+            _animator.SetBool("Attack", true);
+        }
+        
+        public void SetPoint(int point)
+        {
+            _pointText.text = point.ToString();
+        }
+        
+        public void SetDisable()
+        {
+            gameObject.SetActive(false);
+        }
+        
+        public void SetColor(Color color)
+        {
+            _image.color = color;
+        }
+        
+        #endregion
     }
 }

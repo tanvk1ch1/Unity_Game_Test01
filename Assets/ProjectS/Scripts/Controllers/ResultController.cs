@@ -1,18 +1,42 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class ResultController : MonoBehaviour
+namespace ProjectS
 {
-    // Start is called before the first frame update
-    void Start()
+    public class ResultController : MonoBehaviour
     {
+        #region Member
         
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
+        public Action onFinishAnimationEnd;
+        public Action onEndCallback;
         
+        private AnimationEvent finishAnimation;
+        private AnimationEvent resultAnimation;
+        private Animator resultAnimator;
+        
+        #endregion
+        
+        #region MonoBehavior
+        
+        public void Init(GameObject parent, LoadDataObserver loadDataObserver)
+        {
+            
+        }
+        
+        #endregion
+        
+        #region Method
+        
+        private void OnAnimationEnd(GameObject gameObject)
+        {
+            
+        }
+        
+        private void OnFinishFadeOut()
+        {
+            onEndCallback?.Invoke();
+        }
+        
+        #endregion
     }
 }
